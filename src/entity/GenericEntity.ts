@@ -1,7 +1,7 @@
-import { CreateDateColumn, DeleteDateColumn, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, CreateDateColumn, DeleteDateColumn, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-export class GenericEntity{
-    @PrimaryColumn()
+export class GenericEntity extends BaseEntity{
+    @PrimaryGeneratedColumn('uuid')
     id: string;
     
     @CreateDateColumn()

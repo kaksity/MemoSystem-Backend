@@ -4,13 +4,14 @@ import { IRoute } from "./interfaces/route.interfaces";
 
 import cors from "cors";
 import morgan from "morgan";
-
+import path from "path";
 export class ExpressApplication{
     private application: Application;
 
     constructor(routes: IRoute[]) {
         this.application = express();
         this.InitializeMiddlewares();
+        this.InitializePublicFolder();
         this.InitializeRoutes(routes);
     }
 
@@ -20,8 +21,14 @@ export class ExpressApplication{
         this.application.use(express.urlencoded({ extended:false }));
         this.application.use(morgan('combined'));
         this.application.use(cors({
-            origin: '*'
+            origin: '*',
+            methods: ['GET','POST','PUT','DELETE']
         }));
+    }
+    public InitializePublicFolder()
+    {
+        console.log(path.join(__dirname,'..','uploads'))
+        this.application.use('uploads',express.static(path.join(__dirname,'..','uploads')));
     }
     private InitializeRoutes(routes: IRoute[]): void
     {
