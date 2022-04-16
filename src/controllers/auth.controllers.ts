@@ -56,7 +56,10 @@ export class AuthController {
                 message: 'Login successfully',
                 data : {
                     token: signJwtToken({userId: result.id, roleId: result.roleId},process.env.JWT_SECRET_KEY),
-                    expires: 60 * 60
+                    expires: 60 * 60,
+                    user: {
+                        fullName: result.fullName
+                    }
                 },
                 statusCode: 200
             }
