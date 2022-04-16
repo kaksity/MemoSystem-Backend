@@ -3,6 +3,7 @@ import { autoInjectable } from "tsyringe";
 import { Role } from "../entity/Role";
 import { AuthenticatedRequest } from "../interfaces/request.interface";
 import { ResponseWithData, ResponseWithoutData } from "../interfaces/response.interface";
+import { IRole } from "../interfaces/role.interfaces";
 
 @autoInjectable()
 export class RoleController {
@@ -36,7 +37,7 @@ export class RoleController {
             
             await role.save();
             const response: ResponseWithoutData = {
-                success: false,
+                success: true,
                 message: 'Role was created successfully',
                 statusCode: 201
             }
@@ -74,7 +75,7 @@ export class RoleController {
     
             await result.softRemove();
             const response: ResponseWithoutData = {
-                success: false,
+                success: true,
                 message: 'Role was deleted successfully',
                 statusCode: 200
             }
@@ -98,11 +99,20 @@ export class RoleController {
                 }
             });
     
-            const response: ResponseWithData<any> = {
-                success: false,
+            const data: IRole[] = [];
+
+            result.forEach(element => {
+                data.push({
+                    id: element.id,
+                    label: element.name
+                });
+            })
+
+            const response: ResponseWithData<IRole[]> = {
+                success: true,
                 message: 'Retrived roles',
                 statusCode: 200,
-                data: result
+                data
             }
             return res.status(response.statusCode).json(response);    
         } catch (error) {
