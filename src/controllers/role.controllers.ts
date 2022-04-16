@@ -100,7 +100,7 @@ export class RoleController {
     
             const response: ResponseWithData<any> = {
                 success: false,
-                message: 'Role was deleted successfully',
+                message: 'Retrived roles',
                 statusCode: 200,
                 data: result
             }
