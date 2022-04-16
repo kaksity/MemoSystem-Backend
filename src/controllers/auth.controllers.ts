@@ -1,8 +1,9 @@
 import { compare, hash } from "bcryptjs";
 import { Request, Response } from "express";
 import { autoInjectable, inject, injectable } from "tsyringe";
-import { getRepository } from "typeorm";
+import { createQueryBuilder } from "typeorm";
 import { v4 } from "uuid";
+import { Role } from "../entity/Role";
 import { User } from "../entity/User";
 import { AuthenticatedRequest } from "../interfaces/request.interface";
 import { ResponseWithData, ResponseWithoutData } from "../interfaces/response.interface";
@@ -20,13 +21,13 @@ export class AuthController {
         try {
             
             let { username, password } = req.body;
-            const userRepository = getRepository(User);
 
-            const result: User = await userRepository.findOne({
+            const result: User = await User.findOne({
                 where:{
                     username
                 }
             });
+            //const result = await createQueryBuilder().from(User,"user").innerJoinAndSelect("user.role","role").where('username = :username',{username}).getOne()
             
             if(!result) {
                 const response: ResponseWithoutData = {
@@ -51,14 +52,21 @@ export class AuthController {
                 return res.status(response.statusCode).json(response);
             }
 
+            const roleResult: Role = await Role.findOne({
+                where:{
+                    id: result.roleId
+                }
+            })
+
             const response: ResponseWithData<any> = {
                 success: true,
                 message: 'Login successfully',
                 data : {
-                    token: signJwtToken({userId: result.id, roleId: result.roleId},process.env.JWT_SECRET_KEY),
+                    token: signJwtToken({userId: result.id,role: roleResult.code},process.env.JWT_SECRET_KEY),
                     expires: 60 * 60,
                     user: {
-                        fullName: result.fullName
+                        fullName: result.fullName,
+                        roleCode: roleResult.code
                     }
                 },
                 statusCode: 200
@@ -82,9 +90,8 @@ export class AuthController {
         try {
             
             let { username, password } = req.body;
-            const userRepository = getRepository(User);
 
-            const result: User = await userRepository.findOne({
+            const result: User = await User.findOne({
                 where:{
                     username
                 }
@@ -104,7 +111,6 @@ export class AuthController {
             
             const newUserRecord = new User();
             
-            userRepository.save(newUserRecord);
 
             newUserRecord.username = username;
             newUserRecord.password = hashedPassword;

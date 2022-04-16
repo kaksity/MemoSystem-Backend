@@ -24,8 +24,8 @@ export class UserRoute implements IRoute {
     
     public InitializeRoutes()
     {
-        this.router.post(this.path,[this.authMiddleware.isUserLoggedIn], this.userController.createNewUser);
-        this.router.delete(`${this.path}/:userId`,[this.authMiddleware.isUserLoggedIn], this.userController.deleteUser);
+        this.router.post(this.path,[this.authMiddleware.isUserLoggedIn, this.authMiddleware.isAdmin], this.userController.createNewUser);
+        this.router.delete(`${this.path}/:userId`,[this.authMiddleware.isUserLoggedIn, this.authMiddleware.isAdmin], this.userController.deleteUser);
         this.router.get(`${this.path}/:userId`,[this.authMiddleware.isUserLoggedIn],this.userController.getSingleUser);
         this.router.get(this.path,[this.authMiddleware.isUserLoggedIn], this.userController.getAllUsers);
         

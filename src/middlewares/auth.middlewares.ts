@@ -34,4 +34,29 @@ export class AuthMiddleware {
             return res.status(response.statusCode).json(response);
         }
     }
+    public isAdmin(req: AuthenticatedRequest, res: Response, next: NextFunction)
+    {
+        try{
+
+            if(req.jwtPayload.role === 'admin'){
+                next();
+            }else{
+                const response: ResponseWithoutData = {
+                    message: 'Not permited to perform action',
+                    statusCode: 403,
+                    success: false
+                }
+                return res.status(response.statusCode).json(response);
+            }
+        }
+        catch(error)
+        {
+            const response: ResponseWithoutData = {
+                message: 'Token has expired or has been tampered',
+                statusCode: 401,
+                success: false
+            }
+            return res.status(response.statusCode).json(response);
+        }
+    }
 }

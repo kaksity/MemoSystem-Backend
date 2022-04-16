@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { GenericEntity } from "./GenericEntity";
+import { User } from "./User";
 
 @Entity()
 export class Role extends GenericEntity{
@@ -8,4 +9,7 @@ export class Role extends GenericEntity{
     
     @Column()
     code: string;
+
+    @OneToMany(() => User, (user) => user.role)
+    users: User[];
 }

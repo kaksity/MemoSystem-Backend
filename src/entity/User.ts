@@ -1,5 +1,6 @@
-import {Entity, Column } from "typeorm";
+import {Entity, Column, ManyToOne } from "typeorm";
 import { GenericEntity } from "./GenericEntity";
+import { Role } from "./Role";
 
 @Entity()
 export class User extends GenericEntity{
@@ -15,4 +16,7 @@ export class User extends GenericEntity{
 
     @Column()
     fullName: string;
+
+    @ManyToOne(() => Role, (role) => role.users)
+    role: Role;
 }
