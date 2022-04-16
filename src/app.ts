@@ -27,8 +27,7 @@ export class ExpressApplication{
     }
     public InitializePublicFolder()
     {
-        console.log(path.join(__dirname,'..','uploads'))
-        this.application.use('uploads',express.static(path.join(__dirname,'..','uploads')));
+        this.application.use('/public/uploads',express.static(path.join(__dirname,'..','uploads')));
     }
     private InitializeRoutes(routes: IRoute[]): void
     {

@@ -170,6 +170,9 @@ export class FileController {
                 }
             });
             
+            fileDocuments.map(element => {
+                element.url = `${process.env.URL}/public/uploads/${element.url}`;
+            })
             const response: ResponseWithData<any> = {
                 success: true,
                 message: 'Retrived all file documents',
