@@ -5,4 +5,7 @@ import { GenericEntity } from "./GenericEntity";
 export class Role extends GenericEntity{
     @Column()
     name: string;
+    
+    @Column()
+    code: string;
 }

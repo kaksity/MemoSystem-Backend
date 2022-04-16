@@ -12,4 +12,7 @@ export class User extends GenericEntity{
 
     @Column()
     password: string;
+
+    @Column()
+    fullName: string;
 }
