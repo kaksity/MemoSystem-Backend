@@ -18,8 +18,6 @@ export class RoleController {
                 }
             });
 
-            console.log(result);
-    
             if(result)
             {
                 const response: ResponseWithoutData = {
@@ -94,6 +92,9 @@ export class RoleController {
         try {
 
             const result:Role[]  = await Role.find({
+                order:{
+                    name: "ASC"
+                },
                 where:{
                     deletedAt: null
                 }

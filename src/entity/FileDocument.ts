@@ -1,4 +1,5 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
+import { File } from "./File";
 import { GenericEntity } from "./GenericEntity";
 
 @Entity()
@@ -11,4 +12,7 @@ export class FileDocument extends GenericEntity {
 
     @Column()
     url: string; 
+
+    @ManyToOne(() => File, (file) => file.documents)
+    file: File;
 }

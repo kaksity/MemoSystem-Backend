@@ -1,5 +1,7 @@
 import { Request } from "express";
+import { User } from "../entity/User";
 
 export interface AuthenticatedRequest extends Request{
-    jwtPayload: any
+    user?: User,
+    role?: string
 }

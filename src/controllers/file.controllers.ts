@@ -30,8 +30,7 @@ export class FileController {
             }
             
             const newFileRecord = new File();
-            
-            newFileRecord.userId = req.jwtPayload.userId;
+            newFileRecord.user = req.user;
             newFileRecord.name = fileName;
             newFileRecord.code = fileCode;
             newFileRecord.description = fileDescription;
@@ -60,6 +59,9 @@ export class FileController {
             
 
             const files: File[] = await File.find({
+                order:{
+                    name: "ASC"
+                },
                 where: {
                     deletedAt: null
                 }
@@ -164,6 +166,9 @@ export class FileController {
             const fileId = req.params.fileId;
 
             const fileDocuments: FileDocument[] = await FileDocument.find({
+                order:{
+                    name:"ASC"
+                },
                 where: {
                     fileId,
                     deletedAt: null

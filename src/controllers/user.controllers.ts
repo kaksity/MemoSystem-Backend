@@ -126,6 +126,7 @@ export class UserController {
         {
 
             const userResult: User[] = await User.find({
+                relations:['role'],
                 where:{
                     deletedAt: null,
                 }
@@ -137,7 +138,8 @@ export class UserController {
                 data.push({
                     id: element.id,
                     username: element.username,
-                    fullName: element.fullName
+                    fullName: element.fullName,
+                    roleName: element.role.name,
                 })
             });
 

@@ -6,7 +6,7 @@
    "password": "D@ud@p0n@2",
    "database": "MemoSystem",
    "synchronize": true,
-   "logging": false,
+   "logging": true,
    "entities": [
       "src/entity/**/*.ts"
    ],

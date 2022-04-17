@@ -1,12 +1,14 @@
 import { NextFunction, Response } from "express";
 import { autoInjectable } from "tsyringe";
+import { User } from "../entity/User";
+import { IJwtPayload } from "../interfaces/jwt.interfaces";
 import { AuthenticatedRequest } from "../interfaces/request.interface";
 import { ResponseWithoutData } from "../interfaces/response.interface";
 import { decodeJwtToken } from "../shared/functions";
 
 @autoInjectable()
 export class AuthMiddleware {
-    public isUserLoggedIn(req: AuthenticatedRequest, res: Response, next: NextFunction)
+    public async isUserLoggedIn(req: AuthenticatedRequest, res: Response, next: NextFunction)
     {
         const authHeader = req.headers.authorization;
         
@@ -20,8 +22,18 @@ export class AuthMiddleware {
             return res.status(response.statusCode).json(response);
         }
         try{
-            const user = decodeJwtToken(authHeader.split(' ')[1],process.env.JWT_SECRET_KEY);
-            req.jwtPayload = user; 
+            
+            const user = decodeJwtToken(authHeader.split(' ')[1],process.env.JWT_SECRET_KEY) as IJwtPayload;
+            
+            const userQuery = await User.findOne({
+                where:{
+                    id: user.userId
+                }
+            })
+
+            req.role = user.role;
+            req.user = userQuery; 
+            
             next();
         }
         catch(error)
@@ -38,7 +50,7 @@ export class AuthMiddleware {
     {
         try{
 
-            if(req.jwtPayload.role === 'admin'){
+            if(req.role === 'admin'){
                 next();
             }else{
                 const response: ResponseWithoutData = {
