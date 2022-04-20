@@ -6,7 +6,7 @@ import { AuthMiddleware } from "../middlewares/auth.middlewares";
 import { FileUpload } from "../middlewares/fileupload.middlewares";
 
 @autoInjectable()
-export class FileRoutes implements IRoute
+export class FileRoute implements IRoute
 {
     public path: string = '/api/v1/files';
     public router: Router = Router();

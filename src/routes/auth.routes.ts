@@ -4,7 +4,7 @@ import { AuthController } from "../controllers/auth.controllers";
 import { IRoute } from "../interfaces/route.interfaces";
 
 @autoInjectable()
-export class AuthRoutes implements IRoute{
+export class AuthRoute implements IRoute{
     
     public path: string = `/api/v1/auth`;
     public router: Router = Router();

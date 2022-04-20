@@ -127,6 +127,9 @@ export class UserController {
 
             const userResult: User[] = await User.find({
                 relations:['role'],
+                order: {
+                    fullName: 'ASC'
+                },
                 where:{
                     deletedAt: null,
                 }

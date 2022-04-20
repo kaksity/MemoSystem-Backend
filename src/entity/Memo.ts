@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { GenericEntity } from "./GenericEntity";
 import { MemoAttachment } from "./MemoAttachment";
 import { MemoReceipient } from "./MemoReceipient";
@@ -7,12 +7,14 @@ import { User } from "./User";
 @Entity()
 export class Memo extends GenericEntity
 {
-    @OneToOne(() => User)
-    @JoinColumn()
+    @ManyToOne(() => User)
     user:User;
 
-    @Column()
+    @Column({type: 'longtext'})
     content: string;
+
+    @Column()
+    title: string;
 
     @Column()
     date: Date;

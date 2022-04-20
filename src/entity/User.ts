@@ -20,6 +20,9 @@ export class User extends GenericEntity{
     @Column()
     fullName: string;
 
+    @OneToMany(() => Memo, (memo) => memo.user)
+    memo: Memo[];
+
     @ManyToOne(() => Role, (role) => role.users)
     role: Role;
 

@@ -5,7 +5,7 @@
    "username": "kaksity",
    "password": "D@ud@p0n@2",
    "database": "MemoSystem",
-   "synchronize": true,
+   "synchronize": false,
    "logging": true,
    "entities": [
       "src/entity/**/*.ts"
