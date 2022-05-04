@@ -10,7 +10,34 @@ export class FileUpload {
     {
 
         //const uploadPath = `${__dirname}/uploads`;
-        const uploadPath = path.join(__dirname,'../..','uploads')
+        const uploadPath = path.join(__dirname,'../..','uploads/files')
+        const storage = multer.diskStorage({
+            destination: (req,file,cb) => {
+                cb(null, uploadPath);
+            },
+            filename: (req,file,cb) => {
+                const fileName = `${v4()}${path.extname(file.originalname)}`;
+                cb(null,fileName);
+            }
+        });
+        const upload:multer.Multer = multer({
+            storage,
+            fileFilter: (req, file, cb) => {
+                if (file.size > 52428800) {
+                    cb(null, false);
+                    return cb(new Error('File must not greater than 50mb'));
+                } else {
+                    cb(null, true);
+                }
+            }
+        });
+        return upload;
+    }
+    public UploadMemo()
+    {
+
+        //const uploadPath = `${__dirname}/uploads`;
+        const uploadPath = path.join(__dirname,'../..','uploads/memos')
         const storage = multer.diskStorage({
             destination: (req,file,cb) => {
                 cb(null, uploadPath);

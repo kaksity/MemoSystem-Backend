@@ -176,7 +176,7 @@ export class FileController {
             });
             
             fileDocuments.map(element => {
-                element.url = `${process.env.URL}/public/uploads/${element.url}`;
+                element.url = `${process.env.URL}/public/uploads/files/${element.url}`;
             })
             const response: ResponseWithData<any> = {
                 success: true,

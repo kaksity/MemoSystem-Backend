@@ -2,6 +2,7 @@ import {Entity, Column, ManyToOne, OneToMany } from "typeorm";
 import { File } from "./File";
 import { GenericEntity } from "./GenericEntity";
 import { Memo } from "./Memo";
+import { MemoComment } from "./MemoComment";
 import { MemoReceipient } from "./MemoReceipient";
 import { Role } from "./Role";
 
@@ -31,4 +32,7 @@ export class User extends GenericEntity{
 
     @OneToMany(() => File, (files) => files.user)
     files: File[];
+
+    @OneToMany(() => MemoComment, (comment) => comment.user)
+    memoComments: MemoComment[];
 }

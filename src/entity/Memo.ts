@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { GenericEntity } from "./GenericEntity";
 import { MemoAttachment } from "./MemoAttachment";
+import { MemoComment } from "./MemoComment";
 import { MemoReceipient } from "./MemoReceipient";
 import { User } from "./User";
 
@@ -24,4 +25,7 @@ export class Memo extends GenericEntity
 
     @OneToMany(() => MemoAttachment, (attachments) => attachments.memo)
     attachments: MemoAttachment[];
+
+    @OneToMany(() => MemoComment, (comment) => comment.memo)
+    comments: MemoComment[];
 }
