@@ -1,25 +1,36 @@
+import { inject } from '@adonisjs/core/build/standalone'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import { LoginValidator } from '../../../Validators'
+import { AuthService, UserService } from '../../../Services'
+import NotFoundException from '../../../Exceptions/NotFoundException'
+@inject()
 export default class AuthController {
+  /**
+   * Inject the Authentication Service and User Service
+   */
+  constructor(private authService: AuthService, private userService: UserService) {}
   public async login({ request, response, auth }: HttpContextContract) {
     const { username, password } = request.body()
 
-    const validSchema = schema.create({
-      username: schema.string([
-        rules.unique({ table: 'users', column: 'username', caseInsensitive: true }),
-      ]),
-      password: schema.string([rules.minLength(8), rules.alphaNum()]),
-    })
-
-    await request.validate({
-      schema: validSchema,
-    })
+    await request.validate(LoginValidator)
 
     // Check if the user exist
-    const token = await auth.use('api').attempt(username, password)
+    const user = await this.userService.getUserByUsername(username)
+    if (user === null) {
+      throw new NotFoundException('User record does not exist')
+    }
+
+    const isPasswordValid = await this.authService.verifyPassword({
+      password,
+      passwordHash: user.password,
+    })
+    if (isPasswordValid === false) {
+      throw new NotFoundException('User record does not exist')
+    }
+
     const data = {
       success: true,
-      access_token: token,
+      access_token: await auth.login(user),
     }
     return response.json(data)
   }
