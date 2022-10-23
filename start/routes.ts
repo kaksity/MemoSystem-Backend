@@ -29,6 +29,10 @@ Route.group(() => {
     Route.post('login', 'AuthController.login')
     Route.post('register', 'AuthController.register')
   }).prefix('auth')
+
+  Route.group(function () {
+    Route.post('/', 'RolesController.store')
+  }).prefix('roles')
 })
   .prefix('api/v1')
   .namespace('App/Controllers/Http/V1')
