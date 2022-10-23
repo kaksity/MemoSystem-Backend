@@ -23,4 +23,14 @@ export class AuthService {
   }): Promise<boolean> {
     return Hash.verify(passwordHash, password)
   }
+  /**
+   * @description
+   * @author Dauda Pona
+   * @param {string} password
+   * @returns {*}  {Promise<string>}
+   * @memberof AuthService
+   */
+  public async hashPassword(password: string): Promise<string> {
+    return Hash.make(password)
+  }
 }
