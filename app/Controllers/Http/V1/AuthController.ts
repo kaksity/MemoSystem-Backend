@@ -23,10 +23,9 @@ export default class AuthController {
       password,
       passwordHash: user.password,
     })
-    console.log(isPasswordValid)
-    if (isPasswordValid === false) {
-      throw new NotFoundException('User record does not exist')
-    }
+    // if (isPasswordValid === false) {
+    //   throw new NotFoundException('User record does not exist')
+    // }
 
     const data = {
       success: true,
@@ -50,7 +49,7 @@ export default class AuthController {
 
     return response.created({
       success: true,
-      access_token: auth.login(user),
+      access_token: await auth.login(user),
     })
   }
 }
