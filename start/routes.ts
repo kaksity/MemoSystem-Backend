@@ -28,4 +28,6 @@ Route.group(() => {
   Route.group(() => {
     Route.post('login', 'AuthController.login')
   }).prefix('auth')
-}).prefix('api/v1')
+})
+  .prefix('api/v1')
+  .namespace('App/Controllers/Http/V1')

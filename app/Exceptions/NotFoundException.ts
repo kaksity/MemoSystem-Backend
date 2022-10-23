@@ -17,7 +17,7 @@ export default class NotFoundException extends Exception {
    * Since this exception is always not found only the message will change
    */
   constructor(message: string) {
-    super(message, 404, 'RESOURCE_NOT_FOUND')
+    super(message, 404)
   }
   public async handle(error: this, ctx: HttpContextContract) {
     return ctx.response.status(error.status).json({
