@@ -42,4 +42,13 @@ export class RoleService {
   public async deleteRole(role: Role): Promise<void> {
     await role.delete()
   }
+  /**
+   * @description
+   * @author Dauda Pona
+   * @returns {*}  {Promise<Role[]>}
+   * @memberof RoleService
+   */
+  public async getAllRoles(): Promise<Role[]> {
+    return Role.all()
+  }
 }

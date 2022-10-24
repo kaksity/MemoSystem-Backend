@@ -32,6 +32,7 @@ Route.group(() => {
 
   Route.group(function () {
     Route.post('/', 'RolesController.store')
+    Route.get('/', 'RolesController.index')
     Route.delete('/:id', 'RolesController.destroy')
   }).prefix('roles')
 })

@@ -4,12 +4,18 @@ import { CreateRoleValidator } from 'App/Validators'
 import { RoleService } from '../../../Services'
 import AlreadyExistException from '../../../Exceptions/AlreadyExistException'
 import NotFoundException from '../../../Exceptions/NotFoundException'
+import { RoleResource } from '../../../Resources/'
 @inject()
 export default class RolesController {
   /**
    *
    */
   constructor(private roleService: RoleService) {}
+  public async index({ response }: HttpContextContract) {
+    const roles = await this.roleService.getAllRoles()
+
+    return response.json(RoleResource.collection(roles))
+  }
   public async store({ request, response }: HttpContextContract) {
     const { name, code } = request.body()
 
