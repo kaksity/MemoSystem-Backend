@@ -21,6 +21,7 @@ export default class NotFoundException extends Exception {
   }
   public async handle(error: this, ctx: HttpContextContract) {
     return ctx.response.status(error.status).json({
+      success: false,
       type: 'https://tools.ietf.org/html/rfc7231#section-6.5.4',
       title: 'The specified resource was not found.',
       detail: error.message,

@@ -30,11 +30,21 @@ Route.group(() => {
     Route.post('register', 'AuthController.register')
   }).prefix('auth')
 
-  Route.group(function () {
-    Route.post('/', 'RolesController.store')
-    Route.get('/', 'RolesController.index')
-    Route.delete('/:id', 'RolesController.destroy')
-  }).prefix('roles')
+  Route.group(function() {
+    Route.group(function() {
+      Route.post('/', 'InventoriesController.store')
+      Route.get('/', 'InventoriesController.index')
+      Route.get('/:id', 'InventoriesController.show')
+      Route.delete('/:id', 'InventoriesController.destroy')
+  
+    }).prefix('inventories')
+  
+    Route.group(function () {
+      Route.post('/', 'RolesController.store')
+      Route.get('/', 'RolesController.index')
+      Route.delete('/:id', 'RolesController.destroy')
+    }).prefix('roles')
+  }).middleware(['auth'])
 })
   .prefix('api/v1')
   .namespace('App/Controllers/Http/V1')
