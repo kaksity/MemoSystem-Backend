@@ -17,9 +17,9 @@ export default class RolesController {
     return response.json(RoleResource.collection(roles))
   }
   public async store({ request, response }: HttpContextContract) {
-    const { name, code } = request.body()
-
     await request.validate(CreateRoleValidator)
+
+    const { name, code } = request.body()
 
     const role = await this.roleService.getRoleByCode(code)
 

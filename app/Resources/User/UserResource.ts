@@ -1,4 +1,4 @@
-import User from '../../Models/User'
+import User from 'App/Models/User'
 interface UserInterface {
   id: number
   fullName: string

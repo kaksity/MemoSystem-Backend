@@ -1,33 +1,14 @@
-import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import BaseValidator from '../BaseValidator'
 
-export default class CreateRoleValidator extends BaseValidator {
-  constructor(protected ctx: HttpContextContract) {
-    super()
-  }
-
-  /*
-   * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
-   *
-   * For example:
-   * 1. The username must be of data type string. But then also, it should
-   *    not contain special characters or numbers.
-   *    ```
-   *     schema.string({}, [ rules.alpha() ])
-   *    ```
-   *
-   * 2. The email must be of data type string, formatted as a valid
-   *    email. But also, not used by any other user.
-   *    ```
-   *     schema.string({}, [
-   *       rules.email(),
-   *       rules.unique({ table: 'users', column: 'email' }),
-   *     ])
-   *    ```
-   */
+export default class CreateRoleValidator {
+  constructor(protected ctx: HttpContextContract) {}
   public schema = schema.create({
-    name: schema.string([rules.minLength(4)]),
-    code: schema.string([rules.minLength(4)]),
+    name: schema.string([rules.required(), rules.minLength(4), rules.trim()]),
+    code: schema.string([rules.required(), rules.minLength(4), rules.trim()]),
   })
+  public messages: CustomMessages = {
+    'name.required': 'Role Name is required',
+    'code.required': 'Role Code is required',
+  }
 }
