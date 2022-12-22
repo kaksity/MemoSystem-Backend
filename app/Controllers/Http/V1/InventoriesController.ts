@@ -1,10 +1,10 @@
 import { inject } from '@adonisjs/core/build/standalone'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { InventoryService } from '../../../Services'
-import { AlreadyExistException } from '../../../Exceptions'
-import { CreateInventoryValidator } from '../../../Validators'
-import { InventoryResource } from '../../../Resources/Inventory/InventoryResource'
-import NotFoundException from '../../../Exceptions/NotFoundException'
+import { InventoryService } from 'App/Services'
+import { AlreadyExistException } from 'App/Exceptions'
+import { CreateInventoryValidator } from 'App/Validators'
+import { InventoryResource } from 'App/Resources/Inventory/InventoryResource'
+import NotFoundException from 'App/Exceptions/NotFoundException'
 
 @inject()
 export default class InventoriesController {
