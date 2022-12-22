@@ -1,4 +1,4 @@
-import { Role } from '../../Models'
+import { Role } from 'App/Models'
 
 interface RoleInterface {
   id: number

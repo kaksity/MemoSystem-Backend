@@ -1,4 +1,4 @@
-import Inventory from '../Models/Inventory'
+import Inventory from 'App/Models/Inventory'
 export class InventoryService {
   /**
    * @description
@@ -44,7 +44,7 @@ export class InventoryService {
    * @memberof InventoryService
    */
   public async getAllInventories(): Promise<Inventory[]> {
-      return Inventory.all()
+    return Inventory.all()
   }
 
   /**

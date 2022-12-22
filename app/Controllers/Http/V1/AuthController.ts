@@ -1,8 +1,8 @@
 import { inject } from '@adonisjs/core/build/standalone'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { LoginValidator, RegistrationValidator } from '../../../Validators'
-import { AuthService, UserService } from '../../../Services'
-import { NotFoundException, AlreadyExistException } from '../../../Exceptions'
+import { LoginValidator, RegistrationValidator } from 'App/Validators'
+import { AuthService, UserService } from 'App/Services'
+import { NotFoundException, AlreadyExistException } from 'App/Exceptions'
 @inject()
 export default class AuthController {
   /**

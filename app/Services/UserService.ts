@@ -1,4 +1,4 @@
-import User from '../Models/User'
+import User from 'App/Models/User'
 
 export class UserService {
   /**
