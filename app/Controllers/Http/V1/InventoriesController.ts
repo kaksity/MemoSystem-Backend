@@ -3,8 +3,8 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { InventoryService } from '../../../Services'
 import { AlreadyExistException } from '../../../Exceptions'
 import { CreateInventoryValidator } from '../../../Validators'
-import { InventoryResource } from '../../../Resources/Inventory/InventoryResource';
-import NotFoundException from '../../../Exceptions/NotFoundException';
+import { InventoryResource } from '../../../Resources/Inventory/InventoryResource'
+import NotFoundException from '../../../Exceptions/NotFoundException'
 
 @inject()
 export default class InventoriesController {
@@ -18,10 +18,10 @@ export default class InventoriesController {
     return response.json(InventoryResource.collection(inventories))
   }
 
-  public async show({params, response}: HttpContextContract) {
+  public async show({ params, response }: HttpContextContract) {
     const inventory = await this.inventoryService.getInventoryById(params.id)
 
-    if(inventory == null) {
+    if (inventory === null) {
       throw new NotFoundException('Inventory record does not exist')
     }
 
@@ -46,10 +46,10 @@ export default class InventoriesController {
     })
   }
 
-  public async destroy({params, response}: HttpContextContract) {
+  public async destroy({ params, response }: HttpContextContract) {
     const inventory = await this.inventoryService.getInventoryById(params.id)
 
-    if(inventory == null) {
+    if (inventory === null) {
       throw new NotFoundException('Inventory record does not exist')
     }
 

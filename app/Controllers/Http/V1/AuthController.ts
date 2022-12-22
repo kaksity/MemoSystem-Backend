@@ -45,7 +45,12 @@ export default class AuthController {
     }
     const passwordHash = await this.authService.hashPassword(password)
 
-    user = await this.userService.createUser({ username, passwordHash })
+    user = await this.userService.createUser({
+      username,
+      passwordHash,
+      fullName: 'Admin',
+      roleId: 1,
+    })
 
     return response.created({
       success: true,

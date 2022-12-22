@@ -27,10 +27,46 @@ export class UserService {
   public async createUser({
     username,
     passwordHash,
+    fullName,
+    roleId,
   }: {
     username: string
     passwordHash: string
+    fullName: string
+    roleId: number
   }): Promise<User> {
-    return User.create({ username, password: passwordHash })
+    return User.create({ username, password: passwordHash, fullName, roleId })
+  }
+
+  /**
+   * @description
+   * @author Dauda Pona
+   * @param {number} id
+   * @returns {*}  {(Promise<User | null>)}
+   * @memberof UserService
+   */
+  public async getUserById(id: number): Promise<User | null> {
+    return User.find(id)
+  }
+
+  /**
+   * @description
+   * @author Dauda Pona
+   * @param {User} user
+   * @returns {*}  {Promise<void>}
+   * @memberof UserService
+   */
+  public async deleteUser(user: User): Promise<void> {
+    await user.delete()
+  }
+
+  /**
+   * @description
+   * @author Dauda Pona
+   * @returns {*}  {Promise<User[]>}
+   * @memberof UserService
+   */
+  public async getAllUsers(): Promise<User[]> {
+    return User.all()
   }
 }
