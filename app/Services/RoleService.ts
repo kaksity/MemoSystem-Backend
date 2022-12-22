@@ -25,11 +25,11 @@ export class RoleService {
   /**
    * @description
    * @author Dauda Pona
-   * @param {number} id
+   * @param {string} id
    * @returns {*}  {(Promise<Role | null>)}
    * @memberof RoleService
    */
-  public async getRoleById(id: number): Promise<Role | null> {
+  public async getRoleById(id: string): Promise<Role | null> {
     return Role.find(id)
   }
   /**

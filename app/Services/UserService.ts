@@ -41,11 +41,11 @@ export class UserService {
   /**
    * @description
    * @author Dauda Pona
-   * @param {number} id
+   * @param {string} id
    * @returns {*}  {(Promise<User | null>)}
    * @memberof UserService
    */
-  public async getUserById(id: number): Promise<User | null> {
+  public async getUserById(id: string): Promise<User | null> {
     return User.find(id)
   }
 

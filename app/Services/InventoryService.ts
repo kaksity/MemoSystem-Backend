@@ -50,11 +50,11 @@ export class InventoryService {
   /**
    * @description
    * @author Dauda Pona
-   * @param {number} id
+   * @param {string} id
    * @returns {*}  {(Promise<Inventory | null>)}
    * @memberof InventoryService
    */
-  public async getInventoryById(id: number): Promise<Inventory | null> {
+  public async getInventoryById(id: string): Promise<Inventory | null> {
     return Inventory.find(id)
   }
 

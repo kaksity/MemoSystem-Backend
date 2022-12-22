@@ -1,10 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import GenericModel from 'App/Models/GenericModel'
 
-export default class Inventory extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+export default class Inventory extends GenericModel {
   @column()
   public article: string
 
@@ -13,10 +11,4 @@ export default class Inventory extends BaseModel {
 
   @column()
   public code: string
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 }

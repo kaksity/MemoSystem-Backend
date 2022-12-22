@@ -30,11 +30,10 @@ Route.group(() => {
     Route.post('register', 'AuthController.register')
   }).prefix('auth')
 
-  Route.group(function() {
+  Route.group(function () {
     Route.resource('/inventories', 'InventoriesController')
     Route.resource('/roles', 'RolesController')
     Route.resource('/users', 'UsersController')
-    
   }).middleware(['auth'])
 })
   .prefix('api/v1')

@@ -1,35 +1,22 @@
-import { schema, rules } from '@ioc:Adonis/Core/Validator'
+import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import BaseValidator from '../BaseValidator'
 
-export default class CreateUserValidator extends BaseValidator {
-  constructor(protected ctx: HttpContextContract) {
-    super()
-  }
-
-  /*
-   * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
-   *
-   * For example:
-   * 1. The username must be of data type string. But then also, it should
-   *    not contain special characters or numbers.
-   *    ```
-   *     schema.string({}, [ rules.alpha() ])
-   *    ```
-   *
-   * 2. The email must be of data type string, formatted as a valid
-   *    email. But also, not used by any other user.
-   *    ```
-   *     schema.string({}, [
-   *       rules.email(),
-   *       rules.unique({ table: 'users', column: 'email' }),
-   *     ])
-   *    ```
-   */
+export default class CreateUserValidator {
+  constructor(protected ctx: HttpContextContract) {}
   public schema = schema.create({
-    fullName: schema.string([rules.minLength(4)]),
-    role: schema.number(),
-    username: schema.string([rules.minLength(3)]),
-    password: schema.string([rules.minLength(8)]),
+    fullName: schema.string([rules.required(), rules.minLength(4), rules.trim()]),
+    roleId: schema.number([rules.required(), rules.uuid(), rules.trim()]),
+    username: schema.string([rules.minLength(3), rules.required(), rules.trim()]),
+    password: schema.string([rules.minLength(8), rules.required(), rules.trim()]),
   })
+  public messages: CustomMessages = {
+    'fullName.required': 'Full Name is required',
+    'roleId.required': 'Role is required',
+    'username.required': 'Username is required',
+    'password.required': 'Password is required',
+    'fullName.minLength': 'Full Name must be more than 4 Characters',
+    'roleId.uuid': 'Role is not valid',
+    'username.minLength': 'Username must be more than 3 characters',
+    'password.minLength': 'Password must be 8 or more characters',
+  }
 }

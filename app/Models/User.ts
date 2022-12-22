@@ -1,11 +1,8 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
-
-export default class User extends BaseModel {
-  @column({ isPrimary: true })
-  public id: number
-
+import { column, beforeSave, BaseModel, beforeCreate } from '@ioc:Adonis/Lucid/Orm'
+import GenericModel from 'App/Models/GenericModel'
+export default class User extends GenericModel {
   @column()
   public username: string
 
@@ -20,12 +17,6 @@ export default class User extends BaseModel {
 
   @column()
   public rememberMeToken: string | null
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @beforeSave()
   public static async hashPassword(user: User) {

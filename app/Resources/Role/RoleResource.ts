@@ -1,7 +1,7 @@
 import { Role } from 'App/Models'
 
 interface RoleInterface {
-  id: number
+  id: string
   name: string
   code: string
 }
