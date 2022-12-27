@@ -6,13 +6,12 @@ export default class CreateInventoryValidator {
 
   public schema = schema.create({
     article: schema.string([
-      rules.required(),
       rules.minLength(3),
       rules.maxLength(200),
       rules.trim(),
     ]),
-    quantity: schema.number([rules.required()]),
-    code: schema.string([rules.required(), rules.trim(), rules.minLength(3)]),
+    quantity: schema.number([]),
+    code: schema.string([rules.trim(), rules.minLength(3)]),
   })
 
   public messages: CustomMessages = {
@@ -22,5 +21,6 @@ export default class CreateInventoryValidator {
     'quantity.required': 'Quantity is required',
     'code.required': 'Code is required',
     'code.minLength': 'Code must be more than 3 characters',
+    'quantity.number': 'Quantity must be numeric'
   }
 }

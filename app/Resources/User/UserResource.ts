@@ -5,7 +5,7 @@ interface UserInterface {
   id: string
   fullName: string
   username: string
-  role: RoleResource
+  role?: RoleResource
 }
 
 export class UserResource {

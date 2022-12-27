@@ -37,6 +37,7 @@ export default class InventoryService {
   public async getInventoryByCode(code: string): Promise<Inventory | null> {
     return Inventory.findBy('code', code)
   }
+
   /**
    * @description
    * @author Dauda Pona
@@ -55,10 +56,27 @@ export default class InventoryService {
    * @memberof InventoryService
    */
   public async getInventoryById(id: string): Promise<Inventory | null> {
-    return Inventory.find(id)
+    return Inventory.findBy('id', id)
+  }
+/**
+ * @description
+ * @author Dauda Pona
+ * @param {Inventory} inventory
+ * @returns {*}  {Promise<void>}
+ * @memberof InventoryService
+ */
+public async deleteInventory(inventory: Inventory): Promise<void> {
+    await inventory.delete()
   }
 
-  public async deleteInventory(inventory: Inventory): Promise<void> {
-    await inventory.delete()
+  /**
+   * @description
+   * @author Dauda Pona
+   * @param {Inventory} inventory
+   * @returns {*}  {Promise<void>}
+   * @memberof InventoryService
+   */
+  public async updateInventory(inventory: Inventory): Promise<void> {
+    await inventory.save();
   }
 }

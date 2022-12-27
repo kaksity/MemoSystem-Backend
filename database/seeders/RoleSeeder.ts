@@ -1,6 +1,6 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
-import { Role } from 'App/Models'
+import Role from 'App/Models/Role'
 
 export default class extends BaseSeeder {
   

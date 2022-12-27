@@ -35,8 +35,10 @@ Route.group(() => {
     Route.resource('/roles', 'RolesController')
     Route.resource('/users', 'UsersController')
     
-    
+    Route.get('/messages/self', 'MessagesController.selfMessages')
+    Route.get('/messages/mentions', 'MessagesController.mentionedMessages')
     Route.resource('/messages', 'MessagesController')
+    
   }).middleware(['auth'])
 })
   .prefix('api/v1')

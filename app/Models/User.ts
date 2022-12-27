@@ -17,7 +17,7 @@ export default class User extends GenericModel {
 
   @belongsTo(() => Role)
   public role: BelongsTo<typeof Role>
-
+  
   @column()
   public rememberMeToken: string | null
 

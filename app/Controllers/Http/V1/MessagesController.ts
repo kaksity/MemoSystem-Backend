@@ -1,6 +1,7 @@
 import { inject } from '@adonisjs/core/build/standalone';
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { NotFoundException } from 'App/Exceptions';
+import { NotFoundException } from 'App/Exceptions'
+import { MessageResource } from 'App/Resources/Message/MessageResource'
 import MessageService from 'App/Services/MessageService'
 import CreateMessageValidator from 'App/Validators/Message/CreateMessageValidator'
 import MessageRecipientService from 'App/Services/MessageRecipientService'
@@ -17,7 +18,7 @@ export default class MessagesController {
         const user = auth.user!
         
         const message = await this.messageService.createMessage({ title, content }, user)
-        console.log(message.id)
+
         await this.messageRecipientService.createMessageRecipients(message, recipients)
         
         return response.json({
@@ -25,16 +26,16 @@ export default class MessagesController {
             message: 'Message record was created successfully',
         })
     }
-    public async show({request, response, params}: HttpContextContract)
+    public async show({response, params}: HttpContextContract)
     {
         const message = await this.messageService.getMessageById(params.id)
         
         if(message == null) {
             throw new NotFoundException('Message record does not exist')
         }
-        return response.json({})
+        return response.json(MessageResource.single(message))
     }
-    public async destroy({request, response, params}: HttpContextContract)
+    public async destroy({response, params}: HttpContextContract)
     {
         const message = await this.messageService.getMessageById(params.id)
         
@@ -42,11 +43,24 @@ export default class MessagesController {
             throw new NotFoundException('Message record does not exist')
         }
 
+        await this.messageRecipientService.deleteMessageRecipientsByMessageId(message.id)
         await this.messageService.deleteMessage(message)
-
+        
         return response.json({
             success: true,
             message: 'Message record was deleted successfully',
         })
+    }
+    public async selfMessages({response, auth}: HttpContextContract) {
+        const user = auth.user!
+
+        const messages = await this.messageService.getMessagesByUserId(user.id)
+        return response.json(MessageResource.collection(messages))
+    }
+    public async mentionedMessages({response, auth}: HttpContextContract) {
+        const user = auth.user!
+
+        const messages = await this.messageService.getMentionedMessagesByUserId(user.id)
+        return response.json(MessageResource.collection(messages))
     }
 }

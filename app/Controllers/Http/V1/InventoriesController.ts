@@ -2,7 +2,8 @@ import { inject } from '@adonisjs/core/build/standalone'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import InventoryService from 'App/Services/InventoryService'
 import { AlreadyExistException } from 'App/Exceptions'
-import { CreateInventoryValidator } from 'App/Validators'
+import CreateInventoryValidator from 'App/Validators/Inventory/CreateInventoryValidator'
+import UpdateInventoryValidator from 'App/Validators/Inventory/UpdateInventoryValidator'
 import { InventoryResource } from 'App/Resources/Inventory/InventoryResource'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 
@@ -27,7 +28,28 @@ export default class InventoriesController {
 
     return response.json(InventoryResource.single(inventory))
   }
+  public async update({ request, response, params }: HttpContextContract) {
+    await request.validate(UpdateInventoryValidator)
 
+    const { article, quantity, code } = request.body()
+
+    const inventory = await this.inventoryService.getInventoryById(params.id)
+
+    if (inventory === null) {
+      throw new NotFoundException('Inventory record does not exists')
+    }
+    
+    inventory.article = article
+    inventory.code = code
+    inventory.quantity = quantity
+    
+    await this.inventoryService.updateInventory(inventory)
+
+    return response.json({
+      success: true,
+      message: 'Inventory record was updated successfully',
+    })
+  }
   public async store({ request, response }: HttpContextContract) {
     const { article, quantity, code } = request.body()
 

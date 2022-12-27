@@ -6,10 +6,33 @@ export default class MessageService {
         message.delete()
     }
     public async getMessageById(id: string): Promise<Message | null>{
-        return Message.query().where('id', id).first()
+        return Message.query().where('id', id).preload('user', (userQuery) => {
+            userQuery.preload('role')
+        }).preload('recipients', (recipientQuery) => {
+            recipientQuery.preload('user', userQuery => {
+                userQuery.preload('role')
+            })
+        }).first()
     }
-    public async getMessages(user: User): Promise<Message[]> {
-        return Message.query()
+    public async getMessagesByUserId(userId: string): Promise<Message[]> {
+        return Message.query().preload('user', (userQuery) => {
+            userQuery.preload('role')
+        }).preload('recipients', (recipientQuery) => {
+            recipientQuery.preload('user', userQuery => {
+                userQuery.preload('role')
+            })
+        }).where('user_id', userId)
+    }
+    public getMentionedMessagesByUserId(userId: string): Promise<Message[]> {
+        return Message.query().preload('user', (userQuery) => {
+            userQuery.preload('role')
+        }).preload('recipients', (recipientQuery) => {
+            recipientQuery.preload('user', userQuery => {
+                userQuery.preload('role')
+            })
+        }).whereHas('recipients', (query) => {
+            query.where('user_id', userId)
+        })
     }
     public async createMessage({title, content}: {title: string, content: string}, user: User): Promise<Message> {
         return Message.create({title, content, userId: user.id})

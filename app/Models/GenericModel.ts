@@ -9,10 +9,21 @@ export default class GenericModel extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({
+    autoCreate: true,
+    serialize: (dateValue: DateTime | null) => {
+      return dateValue ? dateValue.setZone('utc').toLocaleString(DateTime.DATETIME_FULL) : dateValue
+    },
+  })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({
+    autoCreate: true,
+    autoUpdate: true,
+    serialize: (dateValue: DateTime | null) => {
+      return dateValue ? dateValue.setZone('utc').toLocaleString(DateTime.DATETIME_FULL) : dateValue
+    },
+  })
   public updatedAt: DateTime
 
   @beforeCreate()

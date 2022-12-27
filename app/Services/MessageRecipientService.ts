@@ -9,7 +9,9 @@ export default class MessageRecipientService {
                 userId: recipient
             }
         })
-        console.log(messageRecipients)
-        //await MessageRecipient.createMany(messageRecipients)
+        await MessageRecipient.createMany(messageRecipients)
+    }
+    public async deleteMessageRecipientsByMessageId(messageId: string): Promise<void> {
+        await MessageRecipient.query().where('message_id', messageId).delete()
     }
 }
