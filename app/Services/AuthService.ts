@@ -1,6 +1,6 @@
 import Hash from '@ioc:Adonis/Core/Hash'
 
-export class AuthService {
+export default class AuthService {
   /**
    * @description
    * @author Dauda Pona

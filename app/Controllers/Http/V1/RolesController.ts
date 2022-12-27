@@ -1,10 +1,10 @@
 import { inject } from '@adonisjs/core/build/standalone'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { CreateRoleValidator } from 'App/Validators'
-import { RoleService } from 'App/Services'
+import RoleService from 'App/Services/RoleService'
 import AlreadyExistException from 'App/Exceptions/AlreadyExistException'
 import NotFoundException from 'App/Exceptions/NotFoundException'
-import { RoleResource } from 'App/Resources/'
+import RoleResource from 'App/Resources/Role/RoleResource'
 @inject()
 export default class RolesController {
   /**

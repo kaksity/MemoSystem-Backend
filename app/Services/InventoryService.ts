@@ -1,5 +1,5 @@
 import Inventory from 'App/Models/Inventory'
-export class InventoryService {
+export default class InventoryService {
   /**
    * @description
    * @author Dauda Pona

@@ -1,9 +1,11 @@
 import User from 'App/Models/User'
+import RoleResource from 'App/Resources/Role/RoleResource'
+
 interface UserInterface {
-  id: number
+  id: string
   fullName: string
   username: string
-  roleId: number
+  role: RoleResource
 }
 
 export class UserResource {
@@ -12,7 +14,7 @@ export class UserResource {
       id: user.id,
       fullName: user.fullName,
       username: user.username,
-      roleId: user.roleId,
+      role: RoleResource.single(user.role),
     }
   }
   public static collection(users: User[]): UserInterface[] {

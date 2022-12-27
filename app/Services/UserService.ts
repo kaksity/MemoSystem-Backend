@@ -1,6 +1,6 @@
 import User from 'App/Models/User'
 
-export class UserService {
+export default class UserService {
   /**
    * @description
    * @author Dauda Pona
@@ -33,7 +33,7 @@ export class UserService {
     username: string
     passwordHash: string
     fullName: string
-    roleId: number
+    roleId: string
   }): Promise<User> {
     return User.create({ username, password: passwordHash, fullName, roleId })
   }
@@ -67,6 +67,6 @@ export class UserService {
    * @memberof UserService
    */
   public async getAllUsers(): Promise<User[]> {
-    return User.all()
+    return User.query().preload('role')
   }
 }

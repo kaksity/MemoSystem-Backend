@@ -4,10 +4,10 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 export default class CreateUserValidator {
   constructor(protected ctx: HttpContextContract) {}
   public schema = schema.create({
-    fullName: schema.string([rules.required(), rules.minLength(4), rules.trim()]),
-    roleId: schema.number([rules.required(), rules.uuid(), rules.trim()]),
-    username: schema.string([rules.minLength(3), rules.required(), rules.trim()]),
-    password: schema.string([rules.minLength(8), rules.required(), rules.trim()]),
+    fullName: schema.string([rules.minLength(4), rules.trim()]),
+    roleId: schema.string([rules.uuid(), rules.trim()]),
+    username: schema.string([rules.minLength(3), rules.trim()]),
+    password: schema.string([rules.minLength(8), rules.trim()]),
   })
   public messages: CustomMessages = {
     'fullName.required': 'Full Name is required',

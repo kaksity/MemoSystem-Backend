@@ -1,11 +1,11 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { inject } from '@adonisjs/core/build/standalone'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { UserService, RoleService } from 'App/Services'
+import UserService from 'App/Services/UserService'
+import RoleService from 'App/Services/RoleService'
 import { CreateUserValidator } from 'App/Validators'
 import { AlreadyExistException } from 'App/Exceptions'
 import NotFoundException from 'App/Exceptions/NotFoundException'
-import { AuthService } from 'App/Services/AuthService'
+import AuthService from 'App/Services/AuthService'
 import { UserResource } from 'App/Resources'
 
 @inject()
@@ -21,7 +21,7 @@ export default class UsersController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const { fullName, role, username, password } = request.body()
+    const { fullName, roleId, username, password } = request.body()
 
     await request.validate(CreateUserValidator)
 
@@ -31,7 +31,7 @@ export default class UsersController {
       throw new AlreadyExistException('User record already exist')
     }
 
-    const roleRecord = await this.roleService.getRoleById(role)
+    const roleRecord = await this.roleService.getRoleById(roleId)
 
     if (roleRecord === null) {
       throw new NotFoundException('Role record does not exist')
@@ -43,7 +43,7 @@ export default class UsersController {
       username,
       passwordHash: hashedPassword,
       fullName,
-      roleId: role,
+      roleId,
     })
 
     return response.created({

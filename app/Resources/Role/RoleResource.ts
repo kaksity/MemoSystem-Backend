@@ -6,7 +6,7 @@ interface RoleInterface {
   code: string
 }
 
-export class RoleResource {
+export default class RoleResource {
   public static single(role: Role): RoleInterface {
     return {
       id: role.id,

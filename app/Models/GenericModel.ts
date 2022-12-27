@@ -3,6 +3,9 @@ import { UUIDGenerator } from 'App/InfrastructureProvider/Internal/UuidGenerator
 import { DateTime } from 'luxon'
 
 export default class GenericModel extends BaseModel {
+
+  public static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
   public id: string
 

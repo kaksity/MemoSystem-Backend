@@ -1,13 +1,15 @@
 import { column } from '@ioc:Adonis/Lucid/Orm'
 import GenericModel from 'App/Models/GenericModel'
 
-export default class Inventory extends GenericModel {
+export default class Message extends GenericModel {
+  
   @column()
-  public article: string
+  userId: string
+  
+  @column()
+  title: string
+  
+  @column()
+  content: string
 
-  @column()
-  public quantity: number
-
-  @column()
-  public code: string
 }

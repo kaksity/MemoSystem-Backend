@@ -1,5 +1,5 @@
-import { Role } from 'App/Models'
-export class RoleService {
+import Role  from 'App/Models/Role'
+export default class RoleService {
   /**
    * @description
    * @author Dauda Pona
@@ -30,7 +30,7 @@ export class RoleService {
    * @memberof RoleService
    */
   public async getRoleById(id: string): Promise<Role | null> {
-    return Role.find(id)
+    return Role.findBy('id', id)
   }
   /**
    * @description

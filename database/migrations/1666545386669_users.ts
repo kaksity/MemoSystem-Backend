@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.uuid('id').primary()
       table.string('full_name', 255).notNullable()
       table.string('username', 255).notNullable().unique()
-      table.integer('role_id').notNullable()
+      table.uuid('role_id').index().notNullable()
       table.string('password', 180).notNullable()
       table.string('remember_me_token').nullable()
 

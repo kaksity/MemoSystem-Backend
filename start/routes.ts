@@ -34,6 +34,9 @@ Route.group(() => {
     Route.resource('/inventories', 'InventoriesController')
     Route.resource('/roles', 'RolesController')
     Route.resource('/users', 'UsersController')
+    
+    
+    Route.resource('/messages', 'MessagesController')
   }).middleware(['auth'])
 })
   .prefix('api/v1')
