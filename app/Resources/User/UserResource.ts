@@ -8,7 +8,7 @@ interface UserInterface {
   role?: RoleResource
 }
 
-export class UserResource {
+export default class UserResource {
   public static single(user: User): UserInterface {
     return {
       id: user.id,

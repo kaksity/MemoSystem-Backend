@@ -25,4 +25,8 @@ export default Env.rules({
   ADMIN_FULL_NAME: Env.schema.string(),
   ADMIN_USERNAME: Env.schema.string(),
   ADMIN_PASSWORD: Env.schema.string(),
+  CURRENT_MEDIA_UPLOAD_PROVIDER: Env.schema.string(),
+  DEFAULT_UPLOAD_DESTINATION: Env.schema.string(),
+  DISK_FILE_UPLOAD_PATH: Env.schema.string(),
+  DISK_FILE_UPLOADS_BASE_URL: Env.schema.string(),
 })

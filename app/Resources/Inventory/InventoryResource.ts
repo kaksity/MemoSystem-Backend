@@ -6,7 +6,7 @@ interface InventoryInterface {
   quantity: number
   code: string
 }
-export class InventoryResource {
+export default class InventoryResource {
   public static single(inventory: Inventory): InventoryInterface {
     return {
       id: inventory.id,

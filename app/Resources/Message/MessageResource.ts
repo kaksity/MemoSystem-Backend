@@ -10,7 +10,7 @@ interface MessageInterface {
     user: UserResource,
     recipients: UserResource[]
 }
-export class MessageResource {
+export default class MessageResource {
     public static single(message: Message): MessageInterface {
         const user = UserResource.single(message.user)
 

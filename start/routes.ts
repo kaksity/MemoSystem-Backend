@@ -34,11 +34,16 @@ Route.group(() => {
     Route.resource('/inventories', 'InventoriesController')
     Route.resource('/roles', 'RolesController')
     Route.resource('/users', 'UsersController')
-    
+
     Route.get('/messages/self', 'MessagesController.selfMessages')
     Route.get('/messages/mentions', 'MessagesController.mentionedMessages')
     Route.resource('/messages', 'MessagesController')
-    
+
+    Route.get('/memos/self', 'MemosController.selfMemos')
+    Route.get('/memos/mentions', 'MemosController.mentionedMemos')
+    Route.resource('/memos', 'MemosController')
+    Route.resource('/memos/:memoId/comments', 'MemoCommentsController')
+    Route.resource('/memos/:memoId/attachments', 'MemoAttachmentsController')
   }).middleware(['auth'])
 })
   .prefix('api/v1')
