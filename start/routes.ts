@@ -28,12 +28,13 @@ Route.group(() => {
   Route.group(() => {
     Route.post('login', 'AuthController.login')
     Route.post('register', 'AuthController.register')
+    Route.post('change-password', 'AuthController.changePassword').middleware(['auth'])
   }).prefix('auth')
 
   Route.group(function () {
     Route.resource('/inventories', 'InventoriesController')
     Route.resource('/roles', 'RolesController')
-    Route.resource('/users', 'UsersController')
+    Route.resource('/users', 'UsersController').middleware(['verifySystemUser'])
 
     Route.get('/messages/self', 'MessagesController.selfMessages')
     Route.get('/messages/mentions', 'MessagesController.mentionedMessages')
@@ -44,6 +45,9 @@ Route.group(() => {
     Route.resource('/memos', 'MemosController')
     Route.resource('/memos/:memoId/comments', 'MemoCommentsController')
     Route.resource('/memos/:memoId/attachments', 'MemoAttachmentsController')
+
+    Route.resource('/files', 'FilesController')
+    Route.resource('/files/:fileId/documents', 'FileDocumentsController')
   }).middleware(['auth'])
 })
   .prefix('api/v1')

@@ -34,7 +34,7 @@ export default class MessagesController {
     if (message === null) {
       throw new NotFoundException('Message record does not exist')
     }
-    return response.json(MessageResource.single(message))
+    return response.json({ data: MessageResource.single(message) })
   }
   public async destroy({ response, params, auth }: HttpContextContract) {
     const message = await this.messageService.getMessageById(params.id)
@@ -55,16 +55,24 @@ export default class MessagesController {
       message: 'Message record was deleted successfully',
     })
   }
-  public async selfMessages({ response, auth }: HttpContextContract) {
+  public async selfMessages({ request, response, auth }: HttpContextContract) {
     const user = auth.user!
-
-    const messages = await this.messageService.getMessagesByUserId(user.id)
-    return response.json(MessageResource.collection(messages))
+    
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 20)
+    
+    const { data:messages, meta} = await this.messageService.getMessagesByUserId(user.id, { page, limit })
+    
+    return response.json({ data: MessageResource.collection(messages), meta })
   }
-  public async mentionedMessages({ response, auth }: HttpContextContract) {
+  public async mentionedMessages({ request, response, auth }: HttpContextContract) {
     const user = auth.user!
-
-    const messages = await this.messageService.getMentionedMessagesByUserId(user.id)
-    return response.json(MessageResource.collection(messages))
+    
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 20)
+    
+    const { data:messages, meta} = await this.messageService.getMentionedMessagesByUserId(user.id, { page, limit })
+    
+    return response.json({ data: MessageResource.collection(messages), meta })
   }
 }

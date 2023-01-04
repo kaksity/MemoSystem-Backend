@@ -1,4 +1,4 @@
-import { Role } from 'App/Models'
+import Role from 'App/Models/Role'
 
 interface RoleInterface {
   id: string

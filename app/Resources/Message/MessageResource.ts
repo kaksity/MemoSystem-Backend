@@ -1,6 +1,6 @@
 import Message from 'App/Models/Message'
 import { DateTime } from 'luxon'
-import { UserResource } from '../User/UserResource';
+import UserResource from 'App/Resources/User/UserResource'
 
 interface MessageInterface {
     id: string,
@@ -13,7 +13,6 @@ interface MessageInterface {
 export default class MessageResource {
     public static single(message: Message): MessageInterface {
         const user = UserResource.single(message.user)
-
         const recipients = message.recipients.map(recipient => {
             return UserResource.single(recipient.user)
         })

@@ -27,7 +27,7 @@ export default class MemoAttachmentsController {
       throw new NotFoundException('Memo record does not exist')
     }
 
-    const fileName = await this.fileManagerService.saveFile(request.file('file'))
+    const fileName = await this.fileManagerService.saveFile(request.file('file'), 'memo-attachments')
     
     await this.memoAttachment.createMemoAttachmentService({ fileName }, memo)
 

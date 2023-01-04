@@ -1,5 +1,6 @@
 import Message from 'App/Models/Message'
 import User from 'App/Models/User';
+import PaginationMetaInterface from 'App/TypeChecking/GeneralPurpose/PaginationMetaInterface';
 
 export default class MessageService {
     public async deleteMessage(message: Message) {
@@ -14,17 +15,18 @@ export default class MessageService {
             })
         }).first()
     }
-    public async getMessagesByUserId(userId: string): Promise<Message[]> {
-        return Message.query().preload('user', (userQuery) => {
+    public async getMessagesByUserId(userId: string, { page, limit }): Promise<{data: Message[], meta?: any}> {
+        const messages = await Message.query().preload('user', (userQuery) => {
             userQuery.preload('role')
         }).preload('recipients', (recipientQuery) => {
             recipientQuery.preload('user', userQuery => {
                 userQuery.preload('role')
             })
-        }).where('user_id', userId)
+        }).where('user_id', userId).orderBy('created_at', 'desc').paginate(page, limit)
+        return { data: messages.all(), meta: messages.getMeta()}
     }
-    public getMentionedMessagesByUserId(userId: string): Promise<Message[]> {
-        return Message.query().preload('user', (userQuery) => {
+    public async getMentionedMessagesByUserId(userId: string, { page, limit }): Promise<{data: Message[], meta?: any}> {
+        const messages = await Message.query().preload('user', (userQuery) => {
             userQuery.preload('role')
         }).preload('recipients', (recipientQuery) => {
             recipientQuery.preload('user', userQuery => {
@@ -32,7 +34,8 @@ export default class MessageService {
             })
         }).whereHas('recipients', (query) => {
             query.where('user_id', userId)
-        })
+        }).orderBy('created_at', 'desc').paginate(page, limit)
+        return { data: messages.all(), meta: messages.getMeta() }
     }
     public async createMessage({title, content}: {title: string, content: string}, user: User): Promise<Message> {
         return Message.create({title, content, userId: user.id})

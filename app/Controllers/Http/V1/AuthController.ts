@@ -6,6 +6,10 @@ import  AuthService from 'App/Services/AuthService'
 import UserService from 'App/Services/UserService'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import AlreadyExistException from 'App/Exceptions/AlreadyExistException'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import BadRequestException from 'App/Exceptions/BadRequestException'
+import ChangePasswordValidator from 'App/Validators/Auth/ChangePasswordValidator'
+import UserResource from 'App/Resources/User/UserResource'
 @inject()
 export default class AuthController {
   /**
@@ -32,6 +36,7 @@ export default class AuthController {
 
     const data = {
       success: true,
+      user: UserResource.single(user),
       access_token: await auth.login(user),
     }
     return response.json(data)
@@ -52,12 +57,30 @@ export default class AuthController {
       username,
       passwordHash,
       fullName: 'Admin',
-      roleId: 1,
+      roleId: '',
     })
 
     return response.created({
       success: true,
+      user: UserResource.single(user),
       access_token: await auth.login(user),
+    })
+  }
+  public async changePassword({ request, response, auth }: HttpContextContract) {
+    await request.validate(ChangePasswordValidator)
+    const { oldPassword, newPassword } = request.body()
+    
+    const user = auth.user!
+
+    if(await this.authService.verifyPassword({ password: oldPassword, passwordHash: user.password}) === false) {
+      throw new BadRequestException('Old Password is not correct')
+    }
+    user.password = await this.authService.hashPassword(newPassword)
+    
+    await this.userService.updateUser(user)
+    return response.json({
+      success: true,
+      message: 'Password was changed successfully'
     })
   }
 }

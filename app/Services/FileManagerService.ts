@@ -6,7 +6,7 @@ import MediaUploadInterface from '../TypeChecking/MediaUpload/MediaUploadInterfa
 import fetchCurrentMediaUploadProvider from 'App/Helpers/Providers/fetchCurrentMediaUploadProvider';
 
 export default class FileManagerService {
-    public async saveFile(file: any) {
+    public async saveFile(file: any, storageFolder: string) {
         
         const providerGeneratorOptions: InfrastructureProviderGeneratorOptionsType = {
             identifiedProvider: mediaUploadConfig.currentProvider,
@@ -23,7 +23,6 @@ export default class FileManagerService {
         const MediaUploadProvider: MediaUploadInterface = infrastructureProvider
         
         const uploadedFile = file
-        const storageFolder = 'memo-attachments'
         
         const mediaUploadPayloadOptions = {
             uploadedFile,

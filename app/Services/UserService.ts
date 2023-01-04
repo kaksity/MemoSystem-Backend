@@ -9,7 +9,7 @@ export default class UserService {
    * @memberof UserService
    */
   public async getUserByUsername(username: string): Promise<User | null> {
-    return User.findBy('username', username)
+    return User.query().preload('role').where('username', username).first()
   }
   /**
    * @description
@@ -68,5 +68,16 @@ export default class UserService {
    */
   public async getAllUsers(): Promise<User[]> {
     return User.query().preload('role')
+  }
+
+  /**
+   * @description
+   * @author Dauda Pona
+   * @param {User} user
+   * @returns {*}  {Promise<void>}
+   * @memberof UserService
+   */
+  public async updateUser(user: User): Promise<void>{
+    await user.save()
   }
 }

@@ -28,19 +28,25 @@ export default class MemosController {
       message: 'Memo record was created successfully',
     })
   }
-  public async mentionedMemos({ response, auth }: HttpContextContract) {
+  public async mentionedMemos({ request, response, auth }: HttpContextContract) {
     const user = auth.user!
 
-    const memos = await this.memoService.getMentionedMemoByUserId(user.id)
-    return response.json(MemoResource.collection(memos))
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 20)
+
+    const { data: memos, meta } = await this.memoService.getMentionedMemoByUserId(user.id, { page, limit })
+    return response.json({ data: MemoResource.collection(memos), meta })
 
   }
-  public async selfMemos({ auth, response }: HttpContextContract) {
+  public async selfMemos({ request, auth, response }: HttpContextContract) {
     const user = auth.user!
 
-    const memos = await this.memoService.getMemosByUserId(user.id)
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 20)
+    
+    const { data: memos, meta } = await this.memoService.getMemosByUserId(user.id, { page, limit })
 
-    return response.json(MemoResource.collection(memos))
+    return response.json({ data: MemoResource.collection(memos), meta })
   }
   public async show({ response, params }: HttpContextContract) {
     const memo = await this.memoService.getMemoById(params.id)
@@ -81,5 +87,6 @@ export default class MemosController {
     })
   }
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy({}: HttpContextContract) {
+  }
 }

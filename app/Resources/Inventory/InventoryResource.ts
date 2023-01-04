@@ -1,7 +1,7 @@
-import { Inventory } from 'App/Models'
+import Inventory from 'App/Models/Inventory'
 
 interface InventoryInterface {
-  id: number
+  id: string
   article: string
   quantity: number
   code: string
