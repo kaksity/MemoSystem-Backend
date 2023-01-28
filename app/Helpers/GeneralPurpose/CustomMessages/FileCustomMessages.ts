@@ -1,0 +1,8 @@
+export const FILE_CREATED_SUCCESSFULLY = 'File record was created successfully'
+export const FILE_DETAIL_RETRIEVED_SUCCESSFULLY = 'File record was retrieved successfully'
+export const FILE_DOES_NOT_EXIST = 'File record does not exist'
+export const FILE_ALREADY_EXIST = 'File record already exist'
+export const FILE_CANNOT_BE_DELETED = 'File record cannot be deleted'
+export const FILE_LIST_RETRIEVED_SUCCESSFULLY = 'File list was retrieved successfully'
+export const FILE_UPDATED_SUCCESSFULLY = 'File record was updated successfully'
+export const FILE_DELETED_SUCCESSFULLY = 'File record was deleted successfully'

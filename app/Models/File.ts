@@ -1,24 +1,24 @@
-import { belongsTo, column, BelongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm';
+import { belongsTo, column, BelongsTo, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import GenericModel from 'App/Models/GenericModel'
 import User from 'App/Models/User'
-import FileDocument from 'App/Models/FileDocument';
+import FileDocument from 'App/Models/FileDocument'
 
 export default class File extends GenericModel {
   @column()
   public userId: string
 
   @column()
-  name: string;
-  
+  public name: string
+
   @column()
-  code: string;
-  
+  public code: string
+
   @column()
-  description: string;
+  public description: string
 
   @belongsTo(() => User)
-  user: BelongsTo<typeof User>
+  public user: BelongsTo<typeof User>
 
   @hasMany(() => FileDocument)
-  documents: HasMany<typeof FileDocument>
+  public documents: HasMany<typeof FileDocument>
 }
