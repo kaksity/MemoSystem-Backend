@@ -1,0 +1,8 @@
+export const INVENTORY_CREATED_SUCCESSFULLY = 'Inventory record was created successfully'
+export const INVENTORY_DETAIL_RETRIEVED_SUCCESSFULLY = 'Inventory record was retrieved successfully'
+export const INVENTORY_DOES_NOT_EXIST = 'Inventory record does not exist'
+export const INVENTORY_ALREADY_EXIST = 'Inventory record already exist'
+export const INVENTORY_CANNOT_BE_DELETED = 'Inventory record cannot be deleted'
+export const INVENTORY_LIST_RETRIEVED_SUCCESSFULLY = 'Inventory list was retrieved successfully'
+export const INVENTORY_UPDATED_SUCCESSFULLY = 'Inventory record was updated successfully'
+export const INVENTORY_DELETED_SUCCESSFULLY = 'Inventory record was deleted successfully'

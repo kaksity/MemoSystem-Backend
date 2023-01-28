@@ -1,30 +1,32 @@
 import Inventory from 'App/Models/Inventory'
+import InventoryObjectInterface from 'App/TypeChecking/ModelManagement/InventoryObjectInterface'
+import { NULL_OBJECT } from '../Helpers/GeneralPurpose/CustomMessages/SystemCustomMessages'
+import DeleteRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/DeleteRecordPayloadOptions'
+import UpdateRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/UpdateRecordPayloadOptions'
 export default class InventoryService {
   /**
    * @description
    * @author Dauda Pona
-   * @param {{
-   *     article: string
-   *     quantity: number
-   *     code: string
-   *   }} {
-   *     article,
-   *     quantity,
-   *     code,
-   *   }
+   * @param {Partial<InventoryObjectInterface>} createInventoryPayloadOptions
    * @returns {*}  {Promise<Inventory>}
    * @memberof InventoryService
    */
-  public async createInventory({
-    article,
-    quantity,
-    code,
-  }: {
-    article: string
-    quantity: number
-    code: string
-  }): Promise<Inventory> {
-    return Inventory.create({ article, quantity, code })
+  public async createInventoryRecord(
+    createInventoryPayloadOptions: Partial<InventoryObjectInterface>
+  ): Promise<Inventory> {
+    const { transaction } = createInventoryPayloadOptions
+
+    const inventory = new Inventory()
+
+    Object.assign(inventory, createInventoryPayloadOptions)
+
+    if (transaction) {
+      inventory.useTransaction(transaction)
+    }
+
+    await inventory.save()
+
+    return inventory
   }
 
   /**
@@ -35,7 +37,13 @@ export default class InventoryService {
    * @memberof InventoryService
    */
   public async getInventoryByCode(code: string): Promise<Inventory | null> {
-    return Inventory.findBy('code', code)
+    const inventory = Inventory.query().where('code', code).first()
+
+    if (inventory === NULL_OBJECT) {
+      return NULL_OBJECT
+    }
+
+    return inventory
   }
 
   /**
@@ -56,27 +64,56 @@ export default class InventoryService {
    * @memberof InventoryService
    */
   public async getInventoryById(id: string): Promise<Inventory | null> {
-    return Inventory.findBy('id', id)
-  }
-/**
- * @description
- * @author Dauda Pona
- * @param {Inventory} inventory
- * @returns {*}  {Promise<void>}
- * @memberof InventoryService
- */
-public async deleteInventory(inventory: Inventory): Promise<void> {
-    await inventory.delete()
+    const inventory = Inventory.query().where('id', id).first()
+
+    if (inventory === NULL_OBJECT) {
+      return NULL_OBJECT
+    }
+
+    return inventory
   }
 
   /**
    * @description
    * @author Dauda Pona
-   * @param {Inventory} inventory
+   * @param {DeleteRecordPayloadOptions} deleteInventoryRecordPayloadOptions
    * @returns {*}  {Promise<void>}
    * @memberof InventoryService
    */
-  public async updateInventory(inventory: Inventory): Promise<void> {
-    await inventory.save();
+  public async deleteInventoryRecord(
+    deleteInventoryRecordPayloadOptions: DeleteRecordPayloadOptions
+  ): Promise<void> {
+    const { entityId, transaction } = deleteInventoryRecordPayloadOptions
+
+    const inventory = await this.getInventoryById(entityId)
+
+    if (transaction) {
+      inventory!.useTransaction(transaction)
+    }
+
+    await inventory!.delete()
+  }
+
+  /**
+   * @description
+   * @author Dauda Pona
+   * @param {UpdateRecordPayloadOptions} updateInventoryRecordPayloadOptions
+   * @returns {*}  {Promise<void>}
+   * @memberof InventoryService
+   */
+  public async updateInventoryRecord(
+    updateInventoryRecordPayloadOptions: UpdateRecordPayloadOptions
+  ): Promise<void> {
+    const { entityId, modifiedData, transaction } = updateInventoryRecordPayloadOptions
+
+    const inventory = await this.getInventoryById(entityId)
+
+    inventory!.merge(modifiedData)
+
+    if (transaction) {
+      inventory!.useTransaction(transaction)
+    }
+
+    await inventory!.save()
   }
 }
