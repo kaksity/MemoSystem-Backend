@@ -1,0 +1,8 @@
+export const USER_CREATED_SUCCESSFULLY = 'User record was created successfully'
+export const USER_DETAIL_RETRIEVED_SUCCESSFULLY = 'User record was retrieved successfully'
+export const USER_DOES_NOT_EXIST = 'User record does not exist'
+export const USER_ALREADY_EXIST = 'User record already exist'
+export const USER_CANNOT_BE_DELETED = 'User record cannot be deleted'
+export const USER_LIST_RETRIEVED_SUCCESSFULLY = 'User list was retrieved successfully'
+export const USER_UPDATED_SUCCESSFULLY = 'User record was updated successfully'
+export const USER_DELETED_SUCCESSFULLY = 'User record was deleted successfully'

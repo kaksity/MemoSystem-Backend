@@ -7,6 +7,19 @@ import AlreadyExistException from 'App/Exceptions/AlreadyExistException'
 import NotFoundException from 'App/Exceptions/NotFoundException'
 import AuthService from 'App/Services/AuthService'
 import UserResource from 'App/Resources/User/UserResource'
+import {
+  USER_ALREADY_EXIST,
+  USER_CREATED_SUCCESSFULLY,
+  USER_DELETED_SUCCESSFULLY,
+  USER_DOES_NOT_EXIST,
+  USER_LIST_RETRIEVED_SUCCESSFULLY,
+  USER_UPDATED_SUCCESSFULLY,
+} from 'App/Helpers/GeneralPurpose/CustomMessages/UserCustomMessages'
+import DeleteRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/DeleteRecordPayloadOptions'
+import UserObjectInterface from 'App/TypeChecking/ModelManagement/UserObjectInterface'
+import { ROLE_DOES_NOT_EXIST } from 'App/Helpers/GeneralPurpose/CustomMessages/RoleCustomMessages'
+import UpdateUserValidator from 'App/Validators/User/UpdateUserValidator'
+import UpdateRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/UpdateRecordPayloadOptions'
 
 @inject()
 export default class UsersController {
@@ -15,9 +28,15 @@ export default class UsersController {
     private roleService: RoleService,
     private authService: AuthService
   ) {}
-  public async index({ request, response }: HttpContextContract) {
+
+  public async index({ response }: HttpContextContract) {
     const users = await this.userService.getAllUsers()
-    return response.json(UserResource.collection(users))
+    return response.json({
+      success: true,
+      message: USER_LIST_RETRIEVED_SUCCESSFULLY,
+      status_code: 200,
+      data: UserResource.collection(users),
+    })
   }
 
   public async store({ request, response }: HttpContextContract) {
@@ -25,44 +44,86 @@ export default class UsersController {
 
     await request.validate(CreateUserValidator)
 
-    const user = await this.userService.getUserByUsername(username)
+    let user = await this.userService.getUserByUsername(username)
 
     if (user) {
-      throw new AlreadyExistException('User record already exist')
+      throw new AlreadyExistException(USER_ALREADY_EXIST)
     }
 
     const roleRecord = await this.roleService.getRoleById(roleId)
 
     if (roleRecord === null) {
-      throw new NotFoundException('Role record does not exist')
+      throw new NotFoundException(ROLE_DOES_NOT_EXIST)
     }
 
     const hashedPassword = await this.authService.hashPassword(password)
 
-    await this.userService.createUser({
-      username,
-      passwordHash: hashedPassword,
+    const userCreateOptions: Partial<UserObjectInterface> = {
       fullName,
       roleId,
-    })
+      username,
+      password: hashedPassword,
+    }
+
+    user = await this.userService.createUserRecord(userCreateOptions)
+
+    await user.load('role')
 
     return response.created({
       success: true,
-      message: 'User record was created successfully',
+      message: USER_CREATED_SUCCESSFULLY,
+      status_code: 201,
+      data: UserResource.single(user),
     })
   }
-  public async destroy({ params, response }: HttpContextContract) {
-    // Check if the user exist
+
+  public async update({ request, response, params }: HttpContextContract) {
     const user = await this.userService.getUserById(params.id)
+
     if (user === null) {
-      throw new NotFoundException('User record does not exist')
+      throw new NotFoundException(USER_DOES_NOT_EXIST)
     }
 
-    await this.userService.deleteUser(user)
+    await request.validate(UpdateUserValidator)
+
+    const { fullName, roleId } = request.body()
+
+    const updateUserRecordPayloadOptions: UpdateRecordPayloadOptions = {
+      entityId: user.id,
+      modifiedData: {
+        fullName,
+        roleId,
+      },
+      transaction: undefined,
+    }
+
+    await this.userService.updateUserRecord(updateUserRecordPayloadOptions)
 
     return response.json({
       success: true,
-      message: 'User record was deleted successfully',
+      message: USER_UPDATED_SUCCESSFULLY,
+      status_code: 200,
+      data: null,
+    })
+  }
+  public async destroy({ params, response }: HttpContextContract) {
+    const user = await this.userService.getUserById(params.id)
+    if (user === null) {
+      throw new NotFoundException(USER_DOES_NOT_EXIST)
+    }
+
+    const deleteUserRecordPayloadOptions: DeleteRecordPayloadOptions = {
+      entityId: user.id,
+      transaction: undefined,
+    }
+
+    await this.userService.deleteUserRecord(deleteUserRecordPayloadOptions)
+
+    return response.json({
+      success: true,
+      message: USER_DELETED_SUCCESSFULLY,
+      status_code: 200,
+      data: null,
     })
   }
 }

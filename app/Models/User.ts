@@ -17,14 +17,7 @@ export default class User extends GenericModel {
 
   @belongsTo(() => Role)
   public role: BelongsTo<typeof Role>
-  
+
   @column()
   public rememberMeToken: string | null
-
-  @beforeSave()
-  public static async hashPassword(user: User) {
-    if (user.$dirty.password) {
-      user.password = await Hash.make(user.password)
-    }
-  }
 }
