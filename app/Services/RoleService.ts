@@ -82,4 +82,18 @@ export default class RoleService {
   public async getAllRoles(): Promise<Role[]> {
     return Role.query().orderBy('name', 'asc')
   }
+
+  /**
+   * @description
+   * @author Dauda Pona
+   * @returns {*}  {(Promise<Role | null>)}
+   * @memberof RoleService
+   */
+  public async getRoleAsSystemAdmin(): Promise<Role | null> {
+    const role = await Role.query().where('code', 'system-admin').first()
+    if (role === NULL_OBJECT) {
+      return NULL_OBJECT
+    }
+    return role
+  }
 }
