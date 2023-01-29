@@ -4,16 +4,15 @@ import User from 'App/Models/User'
 import Message from 'App/Models/Message'
 
 export default class MessageRecipient extends GenericModel {
-  
   @column()
-  messageId: string
-  
+  public messageId: string
+
   @column()
-  userId: string
+  public userId: string
 
   @belongsTo(() => User)
-  user: BelongsTo<typeof User>
+  public user: BelongsTo<typeof User>
 
   @belongsTo(() => Message)
-  message: BelongsTo<typeof Message>
+  public message: BelongsTo<typeof Message>
 }

@@ -1,0 +1,8 @@
+export const MESSAGE_CREATED_SUCCESSFULLY = 'Message record was created successfully'
+export const MESSAGE_DETAIL_RETRIEVED_SUCCESSFULLY = 'Message record was retrieved successfully'
+export const MESSAGE_DOES_NOT_EXIST = 'Message record does not exist'
+export const MESSAGE_ALREADY_EXIST = 'Message record already exist'
+export const MESSAGE_CANNOT_BE_DELETED = 'Message record cannot be deleted'
+export const MESSAGE_LIST_RETRIEVED_SUCCESSFULLY = 'Message list was retrieved successfully'
+export const MESSAGE_UPDATED_SUCCESSFULLY = 'Message record was updated successfully'
+export const MESSAGE_DELETED_SUCCESSFULLY = 'Message record was deleted successfully'
