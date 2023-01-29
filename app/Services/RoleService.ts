@@ -1,14 +1,27 @@
-import Role  from 'App/Models/Role'
+import { NULL_OBJECT } from 'App/Helpers/GeneralPurpose/CustomMessages/SystemCustomMessages'
+import Role from 'App/Models/Role'
+import DeleteRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/DeleteRecordPayloadOptions'
+import RoleObjectInterface from 'App/TypeChecking/ModelManagement/RoleObjectInterface'
 export default class RoleService {
   /**
    * @description
    * @author Dauda Pona
-   * @param {*} { name, code }
+   * @param {Partial<RoleObjectInterface>} createRoleOptions
    * @returns {*}  {Promise<Role>}
    * @memberof RoleService
    */
-  public async createRole({ name, code }): Promise<Role> {
-    return Role.create({ name, code })
+  public async createRoleRecord(createRoleOptions: Partial<RoleObjectInterface>): Promise<Role> {
+    const { transaction } = createRoleOptions
+    const role = new Role()
+
+    Object.assign(role, createRoleOptions)
+
+    if (transaction) {
+      role.useTransaction(transaction)
+    }
+
+    await role.save()
+    return role
   }
 
   /**
@@ -19,7 +32,11 @@ export default class RoleService {
    * @memberof RoleService
    */
   public async getRoleByCode(code: string): Promise<Role | null> {
-    return Role.findBy('code', code)
+    const role = await Role.query().where('code', code).first()
+    if (role === NULL_OBJECT) {
+      return NULL_OBJECT
+    }
+    return role
   }
 
   /**
@@ -30,17 +47,31 @@ export default class RoleService {
    * @memberof RoleService
    */
   public async getRoleById(id: string): Promise<Role | null> {
-    return Role.findBy('id', id)
+    const role = await Role.query().where('id', id).first()
+    if (role === NULL_OBJECT) {
+      return NULL_OBJECT
+    }
+    return role
   }
   /**
    * @description
    * @author Dauda Pona
-   * @param {Role} role
+   * @param {DeleteRecordPayloadOptions} deleteRoleRecordPayloadOptions
    * @returns {*}  {Promise<void>}
    * @memberof RoleService
    */
-  public async deleteRole(role: Role): Promise<void> {
-    await role.delete()
+  public async deleteRoleRecord(
+    deleteRoleRecordPayloadOptions: DeleteRecordPayloadOptions
+  ): Promise<void> {
+    const { entityId, transaction } = deleteRoleRecordPayloadOptions
+
+    const role = await this.getRoleById(entityId)
+
+    if (transaction) {
+      role!.useTransaction(transaction)
+    }
+
+    await role!.delete()
   }
   /**
    * @description
@@ -49,6 +80,6 @@ export default class RoleService {
    * @memberof RoleService
    */
   public async getAllRoles(): Promise<Role[]> {
-    return Role.all()
+    return Role.query().orderBy('name', 'asc')
   }
 }
