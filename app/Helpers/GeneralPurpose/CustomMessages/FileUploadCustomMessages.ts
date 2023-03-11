@@ -1,0 +1,8 @@
+export const FILE_UPLOAD_CREATED_SUCCESSFULLY = 'File upload record was created successfully'
+export const FILE_UPLOAD_DETAIL_RETRIEVED_SUCCESSFULLY = 'File upload record was retrieved successfully'
+export const FILE_UPLOAD_DOES_NOT_EXIST = 'File upload record does not exist'
+export const FILE_UPLOAD_ALREADY_EXIST = 'File upload record already exist'
+export const FILE_UPLOAD_CANNOT_BE_DELETED = 'File upload record cannot be deleted'
+export const FILE_UPLOAD_LIST_RETRIEVED_SUCCESSFULLY = 'File upload list was retrieved successfully'
+export const FILE_UPLOAD_UPDATED_SUCCESSFULLY = 'File upload record was updated successfully'
+export const FILE_UPLOAD_DELETED_SUCCESSFULLY = 'File upload record was deleted successfully'

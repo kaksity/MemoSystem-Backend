@@ -69,7 +69,7 @@ export default class FileService {
       file!.useTransaction(transaction)
     }
 
-    await file!.delete()
+    await file!.softDelete()
   }
 
   /**

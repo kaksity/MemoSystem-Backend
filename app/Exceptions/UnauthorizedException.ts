@@ -1,5 +1,5 @@
 import { Exception } from '@adonisjs/core/build/standalone'
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 |
 */
 export default class UnauthorizedException extends Exception {
-    /**
+  /**
    * Since this exception is always not found only the message will change
    */
   constructor(message: string) {

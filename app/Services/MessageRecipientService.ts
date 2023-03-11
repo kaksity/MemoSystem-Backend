@@ -65,6 +65,6 @@ export default class MessageRecipientService {
       messageRecipient!.useTransaction(transaction)
     }
 
-    messageRecipient!.delete()
+    messageRecipient!.softDelete()
   }
 }

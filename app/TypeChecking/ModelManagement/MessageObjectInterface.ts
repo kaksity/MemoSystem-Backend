@@ -15,6 +15,12 @@ interface MessageObjectInterface {
   updatedAt: DateTime
 
   transaction: TransactionClientContract | undefined
+
+  createdAt: DateTime
+
+  updatedAt: DateTime
+
+  deletedAt: DateTime
 }
 
 export default MessageObjectInterface

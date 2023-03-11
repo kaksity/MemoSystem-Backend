@@ -1,4 +1,4 @@
-import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator';
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class UpdateMemoValidator {
@@ -8,7 +8,7 @@ export default class UpdateMemoValidator {
     recipients: schema.array([rules.minLength(1)]).members(schema.string([rules.uuid()])),
     title: schema.string(),
     date: schema.string(),
-    content: schema.string()
+    content: schema.string(),
   })
 
   public messages: CustomMessages = {
@@ -17,6 +17,6 @@ export default class UpdateMemoValidator {
     'title.minLength': 'Memo Title must be 4 or more characters',
     'title.maxLength': 'Memo Title must not be greater than 200 characters',
     'content.minLength': 'Memo Content must be 10 or more characters',
-    'recipients.minLength': 'Memo Recipients must be at least 1'
+    'recipients.minLength': 'Memo Recipients must be at least 1',
   }
 }

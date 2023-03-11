@@ -71,7 +71,7 @@ export default class RoleService {
       role!.useTransaction(transaction)
     }
 
-    await role!.delete()
+    await role!.softDelete()
   }
   /**
    * @description

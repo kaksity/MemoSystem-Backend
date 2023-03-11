@@ -14,6 +14,8 @@ interface InventoryObjectInterface {
 
   updatedAt: DateTime
 
+  deletedAt: DateTime
+
   transaction: TransactionClientContract | undefined
 }
 

@@ -15,7 +15,7 @@ import {
 import { MEMO_ATTACHMENT_LIST_RETRIEVED_SUCCESSFULLY } from 'App/Helpers/GeneralPurpose/CustomMessages/MemoCustomMessages'
 
 @inject()
-export default class MemoAttachmentsController {
+export default class CouncilMemoAttachmentsController {
   constructor(
     private memoAttachment: MemoAttachmentService,
     private memoService: MemoService,

@@ -2,6 +2,7 @@ import { NULL_OBJECT } from 'App/Helpers/GeneralPurpose/CustomMessages/SystemCus
 import Message from 'App/Models/Message'
 import DeleteRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/DeleteRecordPayloadOptions'
 import MessageObjectInterface from 'App/TypeChecking/ModelManagement/MessageObjectInterface'
+import { DateTime } from 'luxon';
 
 export default class MessageService {
   /**
@@ -17,12 +18,11 @@ export default class MessageService {
     const { entityId, transaction } = deleteMessageRecordPayloadOptions
 
     const message = await this.getMessageById(entityId)
-
     if (transaction) {
       message!.useTransaction(transaction)
     }
 
-    await message!.delete()
+    await message!.softDelete()
   }
 
   /**

@@ -19,7 +19,7 @@ import {
 import MemoObjectInterface from 'App/TypeChecking/ModelManagement/MemoObjectInterface'
 
 @inject()
-export default class MemosController {
+export default class CouncilMemosController {
   constructor(public memoService: MemoService, public memoRecipientService: MemoRecipientService) {}
 
   public async store({ request, response, auth }: HttpContextContract) {

@@ -4,7 +4,7 @@ export default class MemoAttachmentService {
   public async createMemoAttachmentService({ fileName }, memo: Memo): Promise<void> {
     await MemoAttachment.create({
       memoId: memo.id,
-      fileName
+      fileName,
     })
   }
   public async getMemoAttachmentByMemoId(memoId: string): Promise<MemoAttachment[]> {
@@ -14,6 +14,6 @@ export default class MemoAttachmentService {
     return await MemoAttachment.query().where('id', id).first()
   }
   public async deleteMemoAttachment(memoAttachment: MemoAttachment) {
-    await memoAttachment.delete()
+    await memoAttachment.softDelete()
   }
 }

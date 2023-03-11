@@ -1,4 +1,4 @@
-import { SERVICE_PROVIDER_DOES_NOT_EXIST } from 'App/Helpers/GeneralPurpose/CustomMessages/customSystemMessages'
+import { SERVICE_PROVIDER_DOES_NOT_EXIST } from 'App/Helpers/GeneralPurpose/CustomMessages/SystemCustomMessages'
 import fetchInfrastructureProvider from 'App/Providers/fetchInfrastructureProvider'
 import InfrastructureProviderGeneratorOptionsType from 'App/TypeChecking/GeneralPurpose/InfrastructureProviderGeneratorOptionsType'
 import mediaUploadConfig from 'Config/mediaUpload'

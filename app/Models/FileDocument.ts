@@ -1,18 +1,17 @@
-import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, BelongsTo } from '@ioc:Adonis/Lucid/Orm';
+import { belongsTo, column, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import GenericModel from 'App/Models/GenericModel'
 import File from 'App/Models/File'
 
 export default class FileDocument extends GenericModel {
   @column()
-  fileId: string;
+  public fileId: string
 
   @column()
-  name: string;
+  public name: string
 
   @column()
-  path: string;
+  public path: string
 
   @belongsTo(() => File)
-  file: BelongsTo<typeof File>
+  public file: BelongsTo<typeof File>
 }

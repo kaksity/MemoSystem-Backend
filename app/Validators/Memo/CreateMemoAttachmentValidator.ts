@@ -1,4 +1,4 @@
-import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator';
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class CreateMemoAttachmentValidator {
@@ -7,7 +7,7 @@ export default class CreateMemoAttachmentValidator {
   public schema = schema.create({
     file: schema.file({
       size: '10mb',
-    })
+    }),
   })
 
   public messages: CustomMessages = {

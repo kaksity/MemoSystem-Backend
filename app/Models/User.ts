@@ -1,7 +1,7 @@
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import GenericModel from 'App/Models/GenericModel'
-import Role from 'App/Models/Role';
+import Role from 'App/Models/Role'
 export default class User extends GenericModel {
   @column()
   public username: string

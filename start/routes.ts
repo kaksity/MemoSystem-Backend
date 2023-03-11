@@ -40,6 +40,12 @@ Route.group(() => {
     Route.get('/messages/mentions', 'MessagesController.mentionedMessages')
     Route.resource('/messages', 'MessagesController')
 
+    Route.get('/councils/memos/self', 'CouncilMemosController.selfMemos')
+    Route.get('/councils/memos/mentions', 'CouncilMemosController.mentionedMemos')
+    Route.resource('/councils/memos', 'CouncilMemosController')
+    Route.resource('/councils/memos/:memoId/comments', 'CouncilMemoCommentsController')
+    Route.resource('/councils/memos/:memoId/attachments', 'CouncilMemoAttachmentsController')
+
     Route.get('/memos/self', 'MemosController.selfMemos')
     Route.get('/memos/mentions', 'MemosController.mentionedMemos')
     Route.resource('/memos', 'MemosController')

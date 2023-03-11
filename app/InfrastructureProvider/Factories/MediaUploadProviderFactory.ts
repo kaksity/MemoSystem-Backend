@@ -1,5 +1,5 @@
 import FileSystemMediaUploadDriver from 'App/InfrastructureProvider/External/MediaUpload/FileSystemMediaUploadDriver'
-import { SERVICE_PROVIDER_DOES_NOT_EXIST } from 'App/Helpers/GeneralPurpose/CustomMessages/customSystemMessages'
+import { SERVICE_PROVIDER_DOES_NOT_EXIST } from 'App/Helpers/GeneralPurpose/CustomMessages/SystemCustomMessages'
 export default class MediaUploadProviderFactory {
   protected CurrentProvider: string
 

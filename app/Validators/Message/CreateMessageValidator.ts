@@ -1,4 +1,4 @@
-import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator';
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class CreateMessageValidator {
@@ -26,7 +26,7 @@ export default class CreateMessageValidator {
   public schema = schema.create({
     recipients: schema.array([rules.minLength(1)]).members(schema.string([rules.uuid()])),
     title: schema.string([rules.minLength(4), rules.maxLength(200)]),
-    content: schema.string([rules.minLength(10)])
+    content: schema.string([rules.minLength(10)]),
   })
 
   /**
@@ -46,6 +46,6 @@ export default class CreateMessageValidator {
     'title.minLength': 'Message Title must be 4 or more characters',
     'title.maxLength': 'Message Title must not be greater than 200 characters',
     'content.minLength': 'Message Content must be 10 or more characters',
-    'recipients.minLength': 'Message Recipients must be at least 1'
+    'recipients.minLength': 'Message Recipients must be at least 1',
   }
 }

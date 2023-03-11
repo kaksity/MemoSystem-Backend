@@ -16,6 +16,8 @@ interface FileObjectInterface {
 
   updateAt: DateTime
 
+  deletedAt: DateTime
+
   transaction: TransactionClientContract | undefined
 }
 

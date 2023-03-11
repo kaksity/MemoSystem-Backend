@@ -3,6 +3,7 @@ import User from 'App/Models/User'
 import DeleteRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/DeleteRecordPayloadOptions'
 import UpdateRecordPayloadOptions from 'App/TypeChecking/GeneralPurpose/UpdateRecordPayloadOptions'
 import UserObjectInterface from 'App/TypeChecking/ModelManagement/UserObjectInterface'
+import { DateTime } from 'luxon'
 
 export default class UserService {
   /**
@@ -73,13 +74,13 @@ export default class UserService {
   ): Promise<void> {
     const { entityId, transaction } = deleteUserRecordPayloadOptions
 
-    const role = await this.getUserById(entityId)
+    const user = await this.getUserById(entityId)
 
     if (transaction) {
-      role!.useTransaction(transaction)
+      user!.useTransaction(transaction)
     }
 
-    await role!.delete()
+    await user!.softDelete()
   }
 
   /**

@@ -1,9 +1,8 @@
-import { belongsTo, column, BelongsTo } from '@ioc:Adonis/Lucid/Orm';
+import { belongsTo, column, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import GenericModel from 'App/Models/GenericModel'
-import Memo from 'App/Models/Memo';
+import Memo from 'App/Models/Memo'
 
 export default class MemoAttachment extends GenericModel {
-  
   @column()
   public memoId: string
 

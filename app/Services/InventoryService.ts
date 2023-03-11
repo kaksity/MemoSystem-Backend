@@ -91,7 +91,7 @@ export default class InventoryService {
       inventory!.useTransaction(transaction)
     }
 
-    await inventory!.delete()
+    await inventory!.softDelete()
   }
 
   /**

@@ -133,7 +133,6 @@ export default class MessagesController {
       page,
       limit,
     })
-
     return response.json({
       success: true,
       message: MESSAGE_LIST_RETRIEVED_SUCCESSFULLY,

@@ -16,7 +16,7 @@ import {
 } from 'App/Helpers/GeneralPurpose/CustomMessages/MemoCustomMessages'
 
 @inject()
-export default class MemoCommentsController {
+export default class CouncilMemoCommentsController {
   /**
    *
    */

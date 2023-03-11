@@ -13,13 +13,14 @@ export default class MemoCommentService {
     return await MemoComment.query().where('id', id).first()
   }
   public async deleteMemoComment(memoComment: MemoComment): Promise<void> {
-    await memoComment.delete()
+    await memoComment.softDelete()
   }
   public async getMemoCommentByMemoId(memoId: string): Promise<MemoComment[]> {
     return await MemoComment.query()
       .preload('user', (userQuery) => {
         userQuery.preload('role')
-      }).orderBy('created_at', 'desc')
+      })
+      .orderBy('created_at', 'desc')
       .where('memo_id', memoId)
   }
 }

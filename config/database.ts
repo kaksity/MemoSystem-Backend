@@ -7,6 +7,7 @@
 
 import Env from '@ioc:Adonis/Core/Env'
 import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
+import path from 'path';
 
 const databaseConfig: DatabaseConfig = {
   /*
@@ -45,11 +46,13 @@ const databaseConfig: DatabaseConfig = {
       migrations: {
         naturalSort: true,
       },
+      seeders: {
+        paths: ['./database/seeders/MainSeeder'] 
+      },
       healthCheck: false,
       debug: false,
     },
-
-  }
+  },
 }
 
 export default databaseConfig

@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('article')
       table.decimal('quantity').defaultTo(0)
       table.string('code')
+      table.dateTime('deleted_at').nullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

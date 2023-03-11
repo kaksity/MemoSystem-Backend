@@ -1,16 +1,18 @@
-import { DateTime } from 'luxon'
 import { TransactionClientContract } from '@ioc:Adonis/Lucid/Database'
-interface MessageRecipientObjectInterface {
+import { DateTime } from 'luxon'
+
+interface MemoObjectInterface {
+  
   id: string
-
-  messageId: string
-
+  
   userId: string
-
-  createdAt: DateTime
-
-  updatedAt: DateTime
-
+  
+  title: string
+  
+  content: string
+  
+  date: DateTime
+  
   transaction: TransactionClientContract | undefined
 
   createdAt: DateTime
@@ -20,4 +22,4 @@ interface MessageRecipientObjectInterface {
   deletedAt: DateTime
 }
 
-export default MessageRecipientObjectInterface
+export default MemoObjectInterface

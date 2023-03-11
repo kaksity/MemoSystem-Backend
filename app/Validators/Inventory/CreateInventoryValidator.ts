@@ -5,11 +5,7 @@ export default class CreateInventoryValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    article: schema.string([
-      rules.minLength(3),
-      rules.maxLength(200),
-      rules.trim(),
-    ]),
+    article: schema.string([rules.minLength(3), rules.maxLength(200), rules.trim()]),
     quantity: schema.number([]),
     code: schema.string([rules.trim(), rules.minLength(3)]),
   })
@@ -21,6 +17,6 @@ export default class CreateInventoryValidator {
     'quantity.required': 'Quantity is required',
     'code.required': 'Code is required',
     'code.minLength': 'Code must be more than 3 characters',
-    'quantity.number': 'Quantity must be numeric'
+    'quantity.number': 'Quantity must be numeric',
   }
 }

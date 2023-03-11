@@ -3,8 +3,8 @@ import UserResource from 'App/Resources/User/UserResource'
 
 interface MemoCommentInterface {
   id: string
-  comment: string,
-  date: Date,
+  comment: string
+  date: Date
   user: UserResource
 }
 export default class MemoCommentResource {

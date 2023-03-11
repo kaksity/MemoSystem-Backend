@@ -8,6 +8,7 @@ export default class extends BaseSchema {
       table.uuid('id')
       table.string('name')
       table.string('code')
+      table.dateTime('deleted_at').nullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
